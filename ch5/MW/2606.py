@@ -27,4 +27,3 @@ while Q:
 
 print(sum(visited)-1)
 
-# https://bio-info.tistory.com/152 참고
