@@ -1,7 +1,7 @@
 x = int(input())
 
 d = [0] * 30001
-
+https://github.com/ryunayeon/siuuuuu_study/blob/master/ch8/8-5(make1).py
 for i in range(2, x + 1):
     d[i] = d[i - 1] + 1
     if i % 2 == 0:
