@@ -1,5 +1,7 @@
 # 감시 피하기
 
+from itertools import combinations
+
 '''
 선생님은 각자의 위치에서 델타 탐색하며 감시를 한다.
 장애물에 막히기전까지의 범위는 모두 커버 가능
@@ -17,19 +19,18 @@ run 함수에는 학생 좌표 넣기
 '''
 move = [(0,1), (1,0), (-1,0), (0,-1)]
 def run(x, y, direction): # 학생좌표 기준으로 사방에 선생이 없거나, 다음에 만나는 오브젝트가 장애물일 경우 통과
+    
     nx = x+move[i][direction]
     ny = y+move[i][direction]
-    if school[nx][ny] == 'T':
+    if nx == N or ny == N or nx < 0 or ny < 0:
+        return True
+    elif school[nx][ny] == 'T':
         return False
     elif school[nx][ny] == 'O':
         return True
-    elif nx == N or ny == N or nx < 0 or ny < 0:
-        return True
     else:
         run(nx,ny,direction)
-def obstacle(): # 장애물 경우의 수 생성 후 run 함수 실행
-    # 순열 생성 및 해당 좌표 장애물 처리
-        
+
 ans = 'YES'
 N = int(input())
 school = [input().split() for _ in range(N)]
@@ -37,12 +38,14 @@ student = []
 empty = []
 # 학생, 장애물 후보지 좌표 몰색
 for i in range(N):
-    for idx, object in enumerate(school):
+    for idx, object in enumerate(school[i]):
         if object == 'S':
             student.append((i, idx))
         elif object=='X':
             empty.append((i, idx))
+for a, b, c in list(combinations(empty, 3)):
+    for i in range(4):
+        if run(a[0], a[1], i):
             
-if obstacle():
-    print('YES')
-    exit()
+# 모든 경우의 수에 대하여 검사, 만약 가능한 케이스 나오면 프로그램 종료
+# 세 개의 장애물 좌표 만드는 함수
