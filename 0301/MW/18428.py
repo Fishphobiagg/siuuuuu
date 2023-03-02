@@ -1,51 +1,53 @@
 # 감시 피하기
-
 from itertools import combinations
-
 '''
-선생님은 각자의 위치에서 델타 탐색하며 감시를 한다.
-장애물에 막히기전까지의 범위는 모두 커버 가능
-S = 학생
-T = 선생
-O = 장애물
-
-3개의 장애물 설치하여 모든 학생이 감시로부터 피할 수 있게
--> 학생의 상하좌우를 깔끔하게 만들어줘야 한다.
-
-학생과 선생이 붙어있는 경우에는 무조건 NO
-열을 순회해서, 학생 다음 바로 선생이나 선생 다음 바로 장애물이 나오면 컷컷컷컷
-스택에 넣어놓고 그 다음 S,T,O의 경우에 따라 검사
-run 함수에는 학생 좌표 넣기
+학생은 1
+선생은 2
+장애물은 3
 '''
-move = [(0,1), (1,0), (-1,0), (0,-1)]
-def run(x, y, direction): # 학생좌표 기준으로 사방에 선생이 없거나, 다음에 만나는 오브젝트가 장애물일 경우 통과
-    
-    nx = x+move[i][direction]
-    ny = y+move[i][direction]
-    if nx == N or ny == N or nx < 0 or ny < 0:
-        return True
-    elif school[nx][ny] == 'T':
-        return False
-    elif school[nx][ny] == 'O':
-        return True
-    else:
-        run(nx,ny,direction)
-
-ans = 'YES'
 N = int(input())
-school = [input().split() for _ in range(N)]
-student = []
-empty = []
-# 학생, 장애물 후보지 좌표 몰색
-for i in range(N):
-    for idx, object in enumerate(school[i]):
-        if object == 'S':
-            student.append((i, idx))
-        elif object=='X':
-            empty.append((i, idx))
-for a, b, c in list(combinations(empty, 3)):
+school = [[1 if i == 'S' else 2 if i == 'T' else 0 for i in input().split()] for _ in range(N)]
+move = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+def run(x, y):
+    obstacle = [1] * 4
     for i in range(4):
-        if run(a[0], a[1], i):
-            
-# 모든 경우의 수에 대하여 검사, 만약 가능한 케이스 나오면 프로그램 종료
-# 세 개의 장애물 좌표 만드는 함수
+        nx = x + move[i][0]
+        ny = y + move[i][1]
+
+        while True:
+            if nx<0 or ny <0 or ny==N or nx ==N:
+                break
+            if school[nx][ny] == 1 or school[nx][ny] == 3:
+               break
+            elif school[nx][ny] == 2:
+               obstacle[i] = 0
+               break
+            nx += move[i][0]
+            ny += move[i][1]
+    if sum(obstacle)<4:
+        return False
+    else:
+        return True
+
+empty = []
+student = []
+# 학생, 장애물 놓을 좌표
+for i in range(N):
+    for j in range(N):
+        if school[i][j] == 1:
+            student.append((i, j))
+        elif school[i][j] == 0:
+            empty.append((i, j))
+
+for a, b, c in list(combinations(empty, 3)):
+    school[a[0]][a[1]], school[b[0]][b[1]], school[c[0]][c[1]] = 3, 3, 3
+    cnt = 0
+    for x, y in student:
+        if run(x, y):
+            cnt += 1
+    if cnt == len(student):
+        print('YES')
+        exit()
+    school[a[0]][a[1]], school[b[0]][b[1]], school[c[0]][c[1]] = 0, 0, 0
+
+print('NO')
