@@ -8,7 +8,7 @@ for i in range(N):
     land.append(a)
 for i in range(257): # 모든 높이에 대해서 검사
     need = 0
-    abs = 0
+    abs = 0            
     for j in range(N):
         for k in range(M):
             if land[j][k] > i:
