@@ -1,9 +1,5 @@
 # 소트
 
-'''
-
-'''
-
 N = int(input())
 arr = list(map(int, input().split()))
 chance = int(input())
