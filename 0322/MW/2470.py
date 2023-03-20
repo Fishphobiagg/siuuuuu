@@ -3,9 +3,7 @@ liquid = list(map(int, input().split()))
 liquid.sort()
 
 min_value = liquid[0]+liquid[-1]
-left = 0
-right = N-1
-ans = (0, N-1)
+left, right, min_value, ans = 0, N-1, liquid[0]+liquid[-1], (0, N-1)
 while left < right:
     a = liquid[left]+liquid[right]
     if abs(a) < abs(min_value):
@@ -18,5 +16,4 @@ while left < right:
         right -= 1
     else:
         left += 1
-
 print(liquid[ans[0]], liquid[ans[1]])
