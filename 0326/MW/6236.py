@@ -4,7 +4,6 @@ input = sys.stdin.readline
 
 N, M = map(int, input().split())
 
-
 dragon_mountain = [int(input()) for _ in range(N)]
 start, end = max(dragon_mountain), sum(dragon_mountain)+1
 result = 0
