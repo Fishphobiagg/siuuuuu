@@ -4,7 +4,7 @@ k = int(input())
 money = sorted([tuple(map(int,input().split())) for _ in range(k)], reverse=True)
 
 dp = [0]*(T+1)
-dp[0] = 1 # dp 초항 설정
+dp[0] = 1 # 동전 안쓰는 경우의 수
 for i in range(k):
     std = [0]*(T+1)
     for j in range(T+1):
