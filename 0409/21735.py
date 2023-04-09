@@ -10,14 +10,11 @@
 N ,M = map(int, input().split())
 length = list(map(int, input().split()))
 willump = 1
-if N == 1:
-    print(length[0]+1)
-    exit()
+
 def nunu(x,snow=1, time=0):
     global willump
     willump = max(willump, snow)
     if time == M:
-        willump = max(willump, snow)
         return
     if x+1 <= N-1:
         nunu(x+1, snow+length[x+1], time+1)
